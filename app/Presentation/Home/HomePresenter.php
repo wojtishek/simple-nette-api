@@ -2,9 +2,9 @@
 
 namespace App\Presentation\Home;
 
-use Nette\Application\UI\Presenter;
+use App\Presentation\BaseApiPresenter;
 
-class HomePresenter extends Presenter
+class HomePresenter extends BaseApiPresenter
 {
 	public function actionDefault(): void
 	{

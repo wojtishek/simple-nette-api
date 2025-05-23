@@ -47,8 +47,7 @@
         "codeception/codeception": "^5.3",
         "codeception/module-phpbrowser": "*",
         "codeception/module-asserts": "*",
-        "codeception/module-doctrine": "^3.2",
-        "codeception/module-symfony": "^3.5"
+        "codeception/module-db": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -59,7 +58,8 @@
     "scripts": {
         "phpcs": "php vendor/bin/phpcs --standard=phpcs.xml",
         "phpcbf": "php vendor/bin/phpcbf --standard=phpcs.xml",
-        "phpstan": "php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G"
+        "phpstan": "php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G",
+        "tester": "php vendor/bin/codecept run"
     },
     "minimum-stability": "stable",
     "config": {

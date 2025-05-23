@@ -1,0 +1,12 @@
+actor: ApiTester
+suite_namespace: Tests\Api
+modules:
+    enabled:
+        - REST:
+              url: "http://simple_nette_api_app"
+              depends: PhpBrowser
+              part: Json
+        - Db:
+            dsn: 'mysql:host=db;dbname=api'
+            user: 'api'
+            password: 'api'

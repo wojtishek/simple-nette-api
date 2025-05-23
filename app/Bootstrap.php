@@ -31,7 +31,7 @@ class Bootstrap
 
 	public function initializeEnvironment(): void
 	{
-		$this->configurator->setDebugMode(true);
+		$this->configurator->setDebugMode(false);
 		$this->configurator->enableTracy($this->rootDir . '/log');
 		$this->configurator->addDynamicParameters(
 			[

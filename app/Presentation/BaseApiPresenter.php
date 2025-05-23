@@ -163,13 +163,14 @@ class BaseApiPresenter extends Presenter
 	{
 
 		try {
-			$this->userService->authorizeRequest(
+			$user = $this->userService->authorizeRequest(
 				$this->getHeaderToken(),
 				self::METHOD_TO_PERMISSION[$method],
 				$resourceType,
 				$resourceId,
 				$columnName,
 			);
+			$this->user = $user;
 		} catch (BadRequestException $e) {
 			$this->sendErrorResponse($this->responseFormatService->error400($e->getMessage()));
 		} catch (OptimisticLockException | ORMException $e) {

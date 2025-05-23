@@ -23,7 +23,7 @@ final class Version20250518212928 extends AbstractMigration
 			CREATE TABLE access_token (id INT AUTO_INCREMENT NOT NULL, access_token TEXT NOT NULL, issued_at DATETIME NOT NULL, expires_at DATETIME NOT NULL, user_id INT DEFAULT NULL, INDEX IDX_B6A2DD68A76ED395 (user_id), PRIMARY KEY(id))
 		SQL);
 		$this->addSql(<<<'SQL'
-			ALTER TABLE access_token ADD CONSTRAINT FK_B6A2DD68A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)
+			ALTER TABLE access_token ADD CONSTRAINT FK_B6A2DD68A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 		SQL);
 	}
 
