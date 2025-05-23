@@ -2,6 +2,7 @@
 set -e
 
 cd /srv
+composer install
 php vendor/bin/openapi app -o www/openapi.yml
 php bin/console migrations:migrate --no-interaction
 
