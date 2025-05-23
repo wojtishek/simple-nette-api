@@ -4,8 +4,6 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
     container_name: simple_nette_api_app
-    healthcheck:
-      test: curl --fail http://localhost:8090 || exit 1
     env_file:
       - .env
     ports:
