@@ -9,20 +9,32 @@ use Nette\Application\Attributes\Requires;
 use OpenApi\Attributes as OA;
 use function assert;
 
-
 #[OA\Response(
 	response: 'article',
 	description: 'Article response',
 	content: new OA\JsonContent(
 		properties: [
 			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 200),
-			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string', example: 'Success'),
-			new OA\Property(property: 'data', description: 'Response data',
+			new OA\Property(
+				property: 'message',
+				description: 'HTTP status message',
+				type: 'string',
+				example: 'Success',
+			),
+			new OA\Property(
+				property: 'data',
+				description: 'Response data',
 				properties: [
-					new OA\Property(property: 'article', ref: '#/components/schemas/ArticleDTO', description: 'Article list', type: 'object'),
-				]),
-		]
-	)
+					new OA\Property(
+						property: 'article',
+						ref: '#/components/schemas/ArticleDTO',
+						description: 'Article list',
+						type: 'object',
+					),
+				],
+			),
+		],
+	),
 )]
 
 #[OA\Response(
@@ -31,13 +43,27 @@ use function assert;
 	content: new OA\JsonContent(
 		properties: [
 			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 200),
-			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string', example: 'Success'),
-			new OA\Property(property: 'data', description: 'Response data',
+			new OA\Property(
+				property: 'message',
+				description: 'HTTP status message',
+				type: 'string',
+				example: 'Success',
+			),
+			new OA\Property(
+				property: 'data',
+				description: 'Response data',
 				properties: [
-					new OA\Property(property: 'article', ref: '#/components/schemas/ArticleDTO', description: 'Article list', type: 'array', items: new OA\Items(ref: '#/components/schemas/ArticleDTO', type: 'object')),
-				]),
-		]
-	)
+					new OA\Property(
+						property: 'article',
+						ref: '#/components/schemas/ArticleDTO',
+						description: 'Article list',
+						type: 'array',
+						items: new OA\Items(ref: '#/components/schemas/ArticleDTO', type: 'object'),
+					),
+				],
+			),
+		],
+	),
 )]
 
 #[OA\RequestBody(
@@ -48,14 +74,34 @@ use function assert;
 		properties: [
 			new OA\Property(property: 'title', description: 'User email', type: 'string'),
 			new OA\Property(property: 'content', description: 'User password', type: 'string'),
-		]
-	)
+		],
+	),
 )]
 
-#[OA\Parameter(parameter: 'articleId', name: 'id', description: 'Article id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
-#[OA\Parameter(parameter: 'articleTitle', name: 'name', description: 'Article title', in: 'query', required: true, schema: new OA\Schema(type: 'string'))]
-#[OA\Parameter(parameter: 'articleContent', name: 'email', description: 'Article content', in: 'query', required: true, schema: new OA\Schema(type: 'string'))]
-
+#[OA\Parameter(
+	parameter: 'articleId',
+	name: 'id',
+	description: 'Article id',
+	in: 'path',
+	required: true,
+	schema: new OA\Schema(type: 'integer'),
+)]
+#[OA\Parameter(
+	parameter: 'articleTitle',
+	name: 'name',
+	description: 'Article title',
+	in: 'query',
+	required: true,
+	schema: new OA\Schema(type: 'string'),
+)]
+#[OA\Parameter(
+	parameter: 'articleContent',
+	name: 'email',
+	description: 'Article content',
+	in: 'query',
+	required: true,
+	schema: new OA\Schema(type: 'string'),
+)]
 class ArticlePresenter extends BaseApiPresenter
 {
 
@@ -91,8 +137,8 @@ class ArticlePresenter extends BaseApiPresenter
 			new OA\Parameter(ref: '#/components/parameters/articleContent'),
 		],
 		responses: [
-			new OA\Response(ref: '#/components/responses/article' ,response: '200', description: 'OK')
-		]
+			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK'),
+		],
 	)]
 	private function callCreateArticle(): void
 	{
@@ -117,8 +163,8 @@ class ArticlePresenter extends BaseApiPresenter
 			new OA\HeaderParameter(ref: '#/components/parameters/authorization'),
 		],
 		responses: [
-			new OA\Response(ref: '#/components/responses/articles', response: '200', description: 'OK')
-		]
+			new OA\Response(ref: '#/components/responses/articles', response: '200', description: 'OK'),
+		],
 	)]
 	#[OA\Get(
 		path: '/articles/{id}',
@@ -129,8 +175,8 @@ class ArticlePresenter extends BaseApiPresenter
 			new OA\Parameter(ref: '#/components/parameters/articleId'),
 		],
 		responses: [
-			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK')
-		]
+			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK'),
+		],
 	)]
 	private function callReadArticle(int|null $id): void
 	{
@@ -164,8 +210,8 @@ class ArticlePresenter extends BaseApiPresenter
 			new OA\Parameter(ref: '#/components/parameters/articleContent'),
 		],
 		responses: [
-			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK')
-		]
+			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK'),
+		],
 	)]
 	private function callUpdateArticle(int|null $id): void
 	{
@@ -198,8 +244,8 @@ class ArticlePresenter extends BaseApiPresenter
 			new OA\Parameter(ref: '#/components/parameters/articleId'),
 		],
 		responses: [
-			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK')
-		]
+			new OA\Response(ref: '#/components/responses/article', response: '200', description: 'OK'),
+		],
 	)]
 	private function callDeleteArticle(int|null $id): void
 	{

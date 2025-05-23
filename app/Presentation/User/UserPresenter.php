@@ -18,13 +18,26 @@ use function assert;
 	content: new OA\JsonContent(
 		properties: [
 			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 200),
-			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string', example: 'Success'),
-			new OA\Property(property: 'data', description: 'Response data',
+			new OA\Property(
+				property: 'message',
+				description: 'HTTP status message',
+				type: 'string',
+				example: 'Success',
+			),
+			new OA\Property(
+				property: 'data',
+				description: 'Response data',
 				properties: [
-					new OA\Property(property: 'user', ref: '#/components/schemas/UserDTO', description: 'Users list', type: 'object'),
-				]),
-		]
-	)
+					new OA\Property(
+						property: 'user',
+						ref: '#/components/schemas/UserDTO',
+						description: 'Users list',
+						type: 'object',
+					),
+				],
+			),
+		],
+	),
 )]
 
 #[OA\Response(
@@ -33,15 +46,29 @@ use function assert;
 	content: new OA\JsonContent(
 		properties: [
 			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 200),
-			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string', example: 'Success'),
-			new OA\Property(property: 'data', description: 'Response data',
+			new OA\Property(
+				property: 'message',
+				description: 'HTTP status message',
+				type: 'string',
+				example: 'Success',
+			),
+			new OA\Property(
+				property: 'data',
+				description: 'Response data',
 				properties: [
-					new OA\Property(property: 'users', description: 'Users list', type: 'array', items:
-						new OA\Items(ref: '#/components/schemas/UserDTO', type: 'object')
+					new OA\Property(
+						property: 'users',
+						description: 'Users list',
+						type: 'array',
+						items: new OA\Items(
+							ref: '#/components/schemas/UserDTO',
+							type: 'object',
+						),
 					),
-				]),
-		]
-	)
+				],
+			),
+		],
+	),
 )]
 
 #[OA\RequestBody(
@@ -53,20 +80,56 @@ use function assert;
 			new OA\Property(property: 'email', description: 'User email', type: 'string'),
 			new OA\Property(property: 'password', description: 'User password', type: 'string'),
 			new OA\Property(property: 'name', description: 'User name', type: 'string'),
-			new OA\Property(property: 'role', description: 'User role', type: 'string', enum: UserRole::class)
-		]
-	)
+			new OA\Property(property: 'role', description: 'User role', type: 'string', enum: UserRole::class),
+		],
+	),
 )]
 
-#[OA\Parameter(parameter: 'userId', name: 'id', description: 'User id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
-#[OA\Parameter(parameter: 'userName', name: 'name', description: 'User name', in: 'query', required: true, schema: new OA\Schema(type: 'string'))]
-#[OA\Parameter(parameter: 'userEmail', name: 'email', description: 'User email', in: 'query', required: true, schema: new OA\Schema(type: 'string'))]
-#[OA\Parameter(parameter: 'userPassword', name: 'password', description: 'User password', in: 'query', required: true, schema: new OA\Schema(type: 'string'))]
-#[OA\Parameter(parameter: 'userRole', name: 'role', description: 'User role', in: 'query', required: true, schema: new OA\Schema(type: 'string'))]
-
+#[OA\Parameter(
+	parameter: 'userId',
+	name: 'id',
+	description: 'User id',
+	in: 'path',
+	required: true,
+	schema: new OA\Schema(type: 'integer'),
+)]
+#[OA\Parameter(
+	parameter: 'userName',
+	name: 'name',
+	description: 'User name',
+	in: 'query',
+	required: true,
+	schema: new OA\Schema(type: 'string'),
+)]
+#[OA\Parameter(
+	parameter: 'userEmail',
+	name: 'email',
+	description: 'User email',
+	in: 'query',
+	required: true,
+	schema: new OA\Schema(type: 'string'),
+)]
+#[OA\Parameter(
+	parameter: 'userPassword',
+	name: 'password',
+	description: 'User password',
+	in: 'query',
+	required: true,
+	schema: new OA\Schema(type: 'string'),
+)]
+#[OA\Parameter(
+	parameter: 'userRole',
+	name: 'role',
+	description: 'User role',
+	in: 'query',
+	required: true,
+	schema: new OA\Schema(type: 'string'),
+)]
 class UserPresenter extends BaseApiPresenter
 {
+
 	private array $requiredParameters = ['name', 'email', 'password', 'role'];
+
 	private EntityRepository $userRepository;
 
 	public int $id;
@@ -113,7 +176,7 @@ class UserPresenter extends BaseApiPresenter
 		responses: [
 			new OA\Response(ref: '#/components/responses/users', response: '200', description: 'OK'),
 			new OA\Response(ref: '#/components/responses/error400', response: 400),
-		]
+		],
 	)]
 	private function callCreateUser(): void
 	{
@@ -137,7 +200,7 @@ class UserPresenter extends BaseApiPresenter
 		responses: [
 			new OA\Response(ref: '#/components/responses/users', response: '200', description: 'OK'),
 			new OA\Response(ref: '#/components/responses/error404', response: 404),
-		]
+		],
 	)]
 	#[OA\Get(
 		path: '/users/{id}',
@@ -150,7 +213,7 @@ class UserPresenter extends BaseApiPresenter
 		responses: [
 			new OA\Response(ref: '#/components/responses/user', response: '200', description: 'OK'),
 			new OA\Response(ref: '#/components/responses/error404', response: 404),
-		]
+		],
 	)]
 	private function callReadUser(int|null $id): void
 	{
@@ -188,7 +251,7 @@ class UserPresenter extends BaseApiPresenter
 			new OA\Response(ref: '#/components/responses/error400', response: 400),
 			new OA\Response(ref: '#/components/responses/error404', response: 404),
 
-		]
+		],
 	)]
 	private function callUpdateUser(int|null $id): void
 	{
@@ -231,7 +294,7 @@ class UserPresenter extends BaseApiPresenter
 			new OA\Response(ref: '#/components/responses/user', response: '200', description: 'OK'),
 			new OA\Response(ref: '#/components/responses/error400', response: 400),
 			new OA\Response(ref: '#/components/responses/error404', response: 404),
-		]
+		],
 	)]
 	private function callDeleteUser(int|null $id): void
 	{

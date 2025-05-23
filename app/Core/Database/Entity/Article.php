@@ -7,42 +7,27 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Attributes as OA;
 
-#[OA\Schema(
-	schema: 'Article',
-	title: 'Article',
-)]
+#[OA\Schema(schema: 'Article', title: 'Article')]
 #[ORM\Entity]
 #[ORM\Table(name: 'article')]
 class Article
 {
 
-	#[OA\Property(
-		description: 'Article ID',
-		example: 1,
-	)]
+	#[OA\Property(description: 'Article ID', example: 1)]
 	#[ORM\Id]
 	#[ORM\GeneratedValue]
 	#[ORM\Column(type: Types::INTEGER)]
 	private int $id;
 
-	#[OA\Property(
-		description: 'Article title',
-		example: 'Article title',
-	)]
+	#[OA\Property(description: 'Article title', example: 'Article title')]
 	#[ORM\Column(length: 255)]
 	private string $title;
 
-	#[OA\Property(
-		description: 'Article content',
-		example: 'Article content',
-	)]
+	#[OA\Property(description: 'Article content', example: 'Article content')]
 	#[ORM\Column(type: Types::TEXT)]
 	private string $content;
 
-	#[OA\Property(
-		description: 'Article author',
-		example: 1,
-	)]
+	#[OA\Property(description: 'Article author', example: 1)]
 	#[ORM\ManyToOne(targetEntity: User::class)]
 	private User $author;
 

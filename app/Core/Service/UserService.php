@@ -38,6 +38,7 @@ class UserService
 		$user->setRole(UserRole::from($data['role']));
 		$this->entityManager->persist($user);
 		$this->entityManager->flush();
+
 		return $user;
 	}
 
@@ -61,10 +62,10 @@ class UserService
 	 * @throws ORMException
 	 */
 	public function authorizeRequest(
-		string      $token,
-		string      $permission,
-		string      $resourceType,
-		int|null    $resourceId = null,
+		string $token,
+		string $permission,
+		string $resourceType,
+		int|null $resourceId = null,
 		string|null $columnName = null,
 	): User|bool
 	{

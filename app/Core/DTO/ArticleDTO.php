@@ -16,9 +16,14 @@ use OpenApi\Attributes as OA;
 		new OA\Property(property: 'title', description: 'Article title', type: 'string'),
 		new OA\Property(property: 'content', description: 'Article content', type: 'string'),
 		new OA\Property(property: 'author', description: 'Article author ID', type: 'integer'),
-		new OA\Property(property: 'createdAt', description: 'Article creation date', type: 'string', format: 'date-time'),
-		new OA\Property(property: 'updatedAt', description: 'Article update date', type: 'string', format: 'date-time')
-	]
+		new OA\Property(
+			property: 'createdAt',
+			description: 'Article creation date',
+			type: 'string',
+			format: 'date-time',
+		),
+		new OA\Property(property: 'updatedAt', description: 'Article update date', type: 'string', format: 'date-time'),
+	],
 )]
 class ArticleDTO
 {

@@ -7,49 +7,31 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Attributes as OA;
 
-#[OA\Schema(
-	schema: 'User',
-	title: 'User',
-)]
+#[OA\Schema(schema: 'User', title: 'User')]
 #[ORM\Entity]
 #[ORM\Table(name: 'user')]
 class User
 {
 
-	#[OA\Property(
-		description: 'User ID',
-		example: 1,
-	)]
+	#[OA\Property(description: 'User ID', example: 1)]
 	#[ORM\Id]
 	#[ORM\GeneratedValue]
 	#[ORM\Column(type: Types::INTEGER)]
 	private int $id;
 
-	#[OA\Property(
-		description: 'User email',
-		example: 'email@example.com',
-	)]
+	#[OA\Property(description: 'User email', example: 'email@example.com')]
 	#[ORM\Column(length: 255, unique: true)]
 	private string $email;
 
-	#[OA\Property(
-		title: 'Hashed user password',
-		description: 'User password',
-	)]
+	#[OA\Property(title: 'Hashed user password', description: 'User password')]
 	#[ORM\Column(length: 255)]
 	private string $passwordHash;
 
-	#[OA\Property(
-		description: 'User full name',
-		example: 'John Doe',
-	)]
+	#[OA\Property(description: 'User full name', example: 'John Doe')]
 	#[ORM\Column(length: 255)]
 	private string $name;
 
-	#[OA\Property(
-		description: 'User role',
-		example: 'author',
-	)]
+	#[OA\Property(description: 'User role', example: 'author')]
 	#[ORM\Column(length: 255, enumType: UserRole::class)]
 	private UserRole $role;
 

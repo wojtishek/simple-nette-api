@@ -15,7 +15,7 @@ use OpenApi\Attributes as OA;
 		new OA\Property(property: 'email', description: 'User email', type: 'string'),
 		new OA\Property(property: 'role', description: 'User role', type: 'string'),
 	],
-	type: 'object'
+	type: 'object',
 )]
 class UserDTO
 {

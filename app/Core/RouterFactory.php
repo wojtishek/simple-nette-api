@@ -17,6 +17,7 @@ final class RouterFactory
 		$router->addRoute('articles[/<id>]', 'Article:default');
 		$router->addRoute('auth/<action>', 'Auth:default');
 		$router->addRoute('<presenter>/<action>[/<id>]', 'Home:default');
+
 		return $router;
 	}
 

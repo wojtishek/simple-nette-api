@@ -21,17 +21,14 @@ use function explode;
 use function implode;
 use function str_starts_with;
 
-#[OA\Info(
-	version: '1.0.0',
-	title: 'Simple nette api',
-)]
+#[OA\Info(version: '1.0.0', title: 'Simple nette api')]
 #[OA\OpenApi(
 	security: [['bearerAuth' => []]],
 	tags: [
 		new OA\Tag(name: 'Auth'),
 		new OA\Tag(name: 'Users'),
 		new OA\Tag(name: 'Articles'),
-	]
+	],
 )]
 #[OA\SecurityScheme(
 	securityScheme: 'bearerAuth',
@@ -45,45 +42,47 @@ use function str_starts_with;
 	parameter: 'authorization',
 	name: 'Authorization',
 	required: true,
-	schema: new OA\Schema(type: 'string', default: 'Bearer {token}')
+	schema: new OA\Schema(type: 'string', default: 'Bearer {token}'),
 )]
 #[OA\HeaderParameter(
 	parameter: 'authorizationOptional',
 	name: 'Authorization',
 	required: false,
-	schema: new OA\Schema(type: 'string', default: 'Bearer {token}')
+	schema: new OA\Schema(type: 'string', default: 'Bearer {token}'),
 )]
 #[OA\Response(
 	response: 'error400',
 	description: 'Bad request',
 	content: new OA\JsonContent(
-	properties: [
-		new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 400),
-		new OA\Property(property: 'message', description: 'HTTP status message', type: 'string'),
-		new OA\Property(property: 'error', description: 'Detailed error', type: 'string')
-	])
+		properties: [
+			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 400),
+			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string'),
+			new OA\Property(property: 'error', description: 'Detailed error', type: 'string'),
+		],
+	),
 )]
 #[OA\Response(
 	response: 'error403',
 	description: 'Forbidden',
 	content: new OA\JsonContent(
-	properties: [
-		new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 403),
-		new OA\Property(property: 'message', description: 'HTTP status message', type: 'string'),
-		new OA\Property(property: 'error', description: 'Detailed error', type: 'string')
-	])
+		properties: [
+			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 403),
+			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string'),
+			new OA\Property(property: 'error', description: 'Detailed error', type: 'string'),
+		],
+	),
 )]
 #[OA\Response(
 	response: 'error404',
 	description: 'Not found',
 	content: new OA\JsonContent(
-	properties: [
-		new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 404),
-		new OA\Property(property: 'message', description: 'HTTP status message', type: 'string'),
-		new OA\Property(property: 'error', description: 'Detailed error', type: 'string')
-	])
+		properties: [
+			new OA\Property(property: 'code', description: 'HTTP status code', type: 'integer', example: 404),
+			new OA\Property(property: 'message', description: 'HTTP status message', type: 'string'),
+			new OA\Property(property: 'error', description: 'Detailed error', type: 'string'),
+		],
+	),
 )]
-
 class BaseApiPresenter extends Presenter
 {
 
@@ -161,7 +160,6 @@ class BaseApiPresenter extends Presenter
 		string|null $columnName = null,
 	): void
 	{
-
 		try {
 			$user = $this->userService->authorizeRequest(
 				$this->getHeaderToken(),

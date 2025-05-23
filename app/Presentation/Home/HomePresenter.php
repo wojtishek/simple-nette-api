@@ -6,8 +6,5 @@ use App\Presentation\BaseApiPresenter;
 
 class HomePresenter extends BaseApiPresenter
 {
-	public function actionDefault(): void
-	{
-		
-	}
+
 }
