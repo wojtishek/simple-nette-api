@@ -1,11 +1,14 @@
 # Simple Nette API
+Simple interpretation of API written in a Nette framework. API contains two entities—User and Article. JWT token provides authorization with 60 minutes of expiration time. After that time you have to login again with `/auth/login` endpoint.
+
+OpenApi documentation is shown as homepage of the project.
 
 ## Prerequisites
 - Docker
 - Docker compose
 
 ## Used technologies
-- PHP
+- PHP 8.2
 - Nette Framework
 - Doctrine ORM
 - Codeception for testing
