@@ -1,0 +1,638 @@
+openapi: 3.0.0
+info:
+  title: 'Simple nette api'
+  version: 1.0.0
+paths:
+  /articles:
+    get:
+      tags:
+        - Articles
+      description: 'Get article list'
+      operationId: 0aca37f276fe44f40344eb49380589a0
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          $ref: '#/components/responses/articles'
+    post:
+      tags:
+        - Articles
+      description: 'Create new article'
+      operationId: c22853042729afefc9d83a77b9c007d8
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/articleTitle'
+        -
+          $ref: '#/components/parameters/articleContent'
+      requestBody:
+        $ref: '#/components/requestBodies/article'
+      responses:
+        '200':
+          $ref: '#/components/responses/article'
+  '/articles/{id}':
+    get:
+      tags:
+        - Articles
+      description: 'Get article by id'
+      operationId: 1bb6dd6b4f1f1f70ee03b87c25a7c027
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/articleId'
+      responses:
+        '200':
+          $ref: '#/components/responses/article'
+    put:
+      tags:
+        - Articles
+      description: 'Update article'
+      operationId: c8eb05646e5a71e524e37212328d3030
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/articleId'
+        -
+          $ref: '#/components/parameters/articleTitle'
+        -
+          $ref: '#/components/parameters/articleContent'
+      requestBody:
+        $ref: '#/components/requestBodies/article'
+      responses:
+        '200':
+          $ref: '#/components/responses/article'
+    delete:
+      tags:
+        - Articles
+      description: 'Delete article'
+      operationId: 35a4f8f02e21364e2852e2ad229e0abe
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/articleId'
+      responses:
+        '200':
+          $ref: '#/components/responses/article'
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      description: 'Register new user. In case no user is registered, the role of first user will be set to admin.'
+      operationId: 3ff26d2ab6071f90f05d94a3c67da817
+      parameters:
+        -
+          $ref: '#/components/parameters/authorizationOptional'
+        -
+          $ref: '#/components/parameters/authEmail'
+        -
+          $ref: '#/components/parameters/authPassword'
+        -
+          $ref: '#/components/parameters/authName'
+        -
+          $ref: '#/components/parameters/authRole'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  description: 'User email'
+                  type: string
+                password:
+                  description: 'User password'
+                  type: string
+                name:
+                  description: 'User name'
+                  type: string
+                role:
+                  description: 'User role'
+                  type: string
+                  enum: [admin, author, reader]
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  code: { description: 'HTTP status code', type: integer, example: 200 }
+                  message: { description: 'HTTP status message', type: string, example: Success }
+                  data: { description: 'Response data', properties: { request: { $ref: '#/components/schemas/UserDTO' } }, type: object }
+                type: object
+        '400':
+          $ref: '#/components/responses/error400'
+        '403':
+          $ref: '#/components/responses/error403'
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      description: 'Login user.'
+      operationId: 923eefdaa3697c2ee14c975755f56527
+      parameters:
+        -
+          $ref: '#/components/parameters/authEmail'
+        -
+          $ref: '#/components/parameters/authPassword'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  description: 'User email'
+                  type: string
+                password:
+                  description: 'User password'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  code: { description: 'HTTP status code', type: integer, example: 200 }
+                  message: { description: 'HTTP status message', type: string, example: Success }
+                  data: { description: 'Response data', properties: { token: { description: 'JWT token', type: string, example: '<KEY>' } }, type: object }
+                type: object
+        '400':
+          $ref: '#/components/responses/error400'
+  /users:
+    get:
+      tags:
+        - Users
+      description: 'Get user list'
+      operationId: e04080197ba2ec90a44d7506b53ae99f
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          $ref: '#/components/responses/users'
+        '404':
+          $ref: '#/components/responses/error404'
+    post:
+      tags:
+        - Users
+      description: 'Create new user'
+      operationId: 4f2f15910ed4b340f104c800e3e22f75
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/userName'
+        -
+          $ref: '#/components/parameters/userEmail'
+        -
+          $ref: '#/components/parameters/userPassword'
+        -
+          $ref: '#/components/parameters/userRole'
+      requestBody:
+        $ref: '#/components/requestBodies/user'
+      responses:
+        '200':
+          $ref: '#/components/responses/users'
+        '400':
+          $ref: '#/components/responses/error400'
+  '/users/{id}':
+    get:
+      tags:
+        - Users
+      description: 'Get user by id'
+      operationId: 8e83da5f537a6c57480c00636bf3ae43
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          $ref: '#/components/responses/user'
+        '404':
+          $ref: '#/components/responses/error404'
+    put:
+      tags:
+        - Users
+      description: 'Update user'
+      operationId: f0b588892b3eb899d36e066f930711cc
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/userId'
+        -
+          $ref: '#/components/parameters/userName'
+        -
+          $ref: '#/components/parameters/userEmail'
+        -
+          $ref: '#/components/parameters/userPassword'
+        -
+          $ref: '#/components/parameters/userRole'
+      requestBody:
+        $ref: '#/components/requestBodies/user'
+      responses:
+        '200':
+          $ref: '#/components/responses/user'
+        '400':
+          $ref: '#/components/responses/error400'
+        '404':
+          $ref: '#/components/responses/error404'
+    delete:
+      tags:
+        - Users
+      description: 'Delete user'
+      operationId: 030d5e939754b979f9d6736c992f2b0a
+      parameters:
+        -
+          $ref: '#/components/parameters/authorization'
+        -
+          $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          $ref: '#/components/responses/user'
+        '400':
+          $ref: '#/components/responses/error400'
+        '404':
+          $ref: '#/components/responses/error404'
+components:
+  schemas:
+    ArticleDTO:
+      title: ArticleDTO
+      description: 'Article endpoints'
+      properties:
+        id:
+          description: 'Article id'
+          type: integer
+        title:
+          description: 'Article title'
+          type: string
+        content:
+          description: 'Article content'
+          type: string
+        author:
+          description: 'Article author ID'
+          type: integer
+        createdAt:
+          description: 'Article creation date'
+          type: string
+          format: date-time
+        updatedAt:
+          description: 'Article update date'
+          type: string
+          format: date-time
+      type: object
+    UserDTO:
+      title: UserDTO
+      description: 'User endpoints'
+      properties:
+        id:
+          description: 'User ID'
+          type: integer
+        name:
+          description: 'User name'
+          type: string
+        email:
+          description: 'User email'
+          type: string
+        role:
+          description: 'User role'
+          type: string
+      type: object
+    Article:
+      title: Article
+      properties:
+        id:
+          description: 'Article ID'
+          type: integer
+          example: 1
+        title:
+          description: 'Article title'
+          type: string
+          example: 'Article title'
+        content:
+          description: 'Article content'
+          type: string
+          example: 'Article content'
+        author:
+          $ref: '#/components/schemas/User'
+      type: object
+    User:
+      title: User
+      properties:
+        id:
+          description: 'User ID'
+          type: integer
+          example: 1
+        email:
+          description: 'User email'
+          type: string
+          example: email@example.com
+        passwordHash:
+          title: 'Hashed user password'
+          description: 'User password'
+          type: string
+        name:
+          description: 'User full name'
+          type: string
+          example: 'John Doe'
+        role:
+          description: 'User role'
+          example: author
+      type: object
+  responses:
+    article:
+      description: 'Article response'
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 200
+              message:
+                description: 'HTTP status message'
+                type: string
+                example: Success
+              data:
+                description: 'Response data'
+                properties:
+                  article: { $ref: '#/components/schemas/ArticleDTO' }
+                type: object
+            type: object
+    articles:
+      description: 'Article response'
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 200
+              message:
+                description: 'HTTP status message'
+                type: string
+                example: Success
+              data:
+                description: 'Response data'
+                properties:
+                  article: { $ref: '#/components/schemas/ArticleDTO' }
+                type: object
+            type: object
+    error400:
+      description: 'Bad request'
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 400
+              message:
+                description: 'HTTP status message'
+                type: string
+              error:
+                description: 'Detailed error'
+                type: string
+            type: object
+    error403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 403
+              message:
+                description: 'HTTP status message'
+                type: string
+              error:
+                description: 'Detailed error'
+                type: string
+            type: object
+    error404:
+      description: 'Not found'
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 404
+              message:
+                description: 'HTTP status message'
+                type: string
+              error:
+                description: 'Detailed error'
+                type: string
+            type: object
+    user:
+      description: 'User response'
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 200
+              message:
+                description: 'HTTP status message'
+                type: string
+                example: Success
+              data:
+                description: 'Response data'
+                properties:
+                  user: { $ref: '#/components/schemas/UserDTO' }
+                type: object
+            type: object
+    users:
+      description: 'Users list response'
+      content:
+        application/json:
+          schema:
+            properties:
+              code:
+                description: 'HTTP status code'
+                type: integer
+                example: 200
+              message:
+                description: 'HTTP status message'
+                type: string
+                example: Success
+              data:
+                description: 'Response data'
+                properties:
+                  users: { description: 'Users list', type: array, items: { $ref: '#/components/schemas/UserDTO' } }
+                type: object
+            type: object
+  parameters:
+    articleId:
+      name: id
+      in: path
+      description: 'Article id'
+      required: true
+      schema:
+        type: integer
+    articleTitle:
+      name: name
+      in: query
+      description: 'Article title'
+      required: true
+      schema:
+        type: string
+    articleContent:
+      name: email
+      in: query
+      description: 'Article content'
+      required: true
+      schema:
+        type: string
+    authEmail:
+      name: email
+      in: query
+      description: 'User email'
+      required: true
+      schema:
+        type: string
+    authPassword:
+      name: password
+      in: query
+      description: 'User password'
+      required: true
+      schema:
+        type: string
+    authName:
+      name: name
+      in: query
+      description: 'User name'
+      required: true
+      schema:
+        type: string
+    authRole:
+      name: role
+      in: query
+      description: 'User role'
+      required: true
+      schema:
+        type: string
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 'Bearer {token}'
+    authorizationOptional:
+      name: Authorization
+      in: header
+      required: false
+      schema:
+        type: string
+        default: 'Bearer {token}'
+    userId:
+      name: id
+      in: path
+      description: 'User id'
+      required: true
+      schema:
+        type: integer
+    userName:
+      name: name
+      in: query
+      description: 'User name'
+      required: true
+      schema:
+        type: string
+    userEmail:
+      name: email
+      in: query
+      description: 'User email'
+      required: true
+      schema:
+        type: string
+    userPassword:
+      name: password
+      in: query
+      description: 'User password'
+      required: true
+      schema:
+        type: string
+    userRole:
+      name: role
+      in: query
+      description: 'User role'
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    article:
+      description: 'Article request'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              title:
+                description: 'User email'
+                type: string
+              content:
+                description: 'User password'
+                type: string
+            type: object
+    user:
+      description: 'User request'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              email:
+                description: 'User email'
+                type: string
+              password:
+                description: 'User password'
+                type: string
+              name:
+                description: 'User name'
+                type: string
+              role:
+                description: 'User role'
+                type: string
+                enum:
+                  - admin
+                  - author
+                  - reader
+            type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: Authorization
+      in: header
+      bearerFormat: JWT
+      scheme: bearer
+security:
+  -
+    bearerAuth: []
+tags:
+  -
+    name: Auth
+  -
+    name: Users
+  -
+    name: Articles

@@ -2,3 +2,5 @@
 vendor
 temp/*
 log/*
+db_data
+.env

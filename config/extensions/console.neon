@@ -1,0 +1,3 @@
+extensions:
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	console.extra: Contributte\Console\Extra\DI\ConsoleBridgesExtension(%consoleMode%)

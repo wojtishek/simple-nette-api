@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    container_name: simple_nette_api_app
+    env_file:
+      - .env
+    ports:
+      - "8090:80"
+    volumes:
+      - .:/srv
+    networks:
+      - simple_nette_api_network
+  db:
+    image: mariadb:11.7.2
+    container_name: simple_nette_api_db
+    ports:
+      - "33061:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_USER: ${DB_USER:-api}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-api}
+      MARIADB_DATABASE: ${DB_DATABASE:-api}
+    networks:
+      - simple_nette_api_network
+
+networks:
+  simple_nette_api_network:
+
+volumes:
+  db_data:
